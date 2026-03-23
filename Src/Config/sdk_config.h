@@ -3912,13 +3912,13 @@
 // <e> NRFX_TWIM_ENABLED - nrfx_twim - TWIM peripheral driver
 //==========================================================
 #ifndef NRFX_TWIM_ENABLED
-#define NRFX_TWIM_ENABLED 0
+#define NRFX_TWIM_ENABLED 1
 #endif
 // <q> NRFX_TWIM0_ENABLED  - Enable TWIM0 instance
  
 
 #ifndef NRFX_TWIM0_ENABLED
-#define NRFX_TWIM0_ENABLED 0
+#define NRFX_TWIM0_ENABLED 1
 #endif
 
 // <q> NRFX_TWIM1_ENABLED  - Enable TWIM1 instance
@@ -11140,7 +11140,7 @@
 // <e> NRF_SDH_BLE_ENABLED - nrf_sdh_ble - SoftDevice BLE event handler
 //==========================================================
 #ifndef NRF_SDH_BLE_ENABLED
-#define NRF_SDH_BLE_ENABLED 0
+#define NRF_SDH_BLE_ENABLED 1
 #endif
 // <h> BLE Stack configuration - Stack configuration parameters
 
@@ -11158,7 +11158,7 @@
 
 // <o> NRF_SDH_BLE_PERIPHERAL_LINK_COUNT - Maximum number of peripheral links. 
 #ifndef NRF_SDH_BLE_PERIPHERAL_LINK_COUNT
-#define NRF_SDH_BLE_PERIPHERAL_LINK_COUNT 0
+#define NRF_SDH_BLE_PERIPHERAL_LINK_COUNT 1
 #endif
 
 // <o> NRF_SDH_BLE_CENTRAL_LINK_COUNT - Maximum number of central links. 
@@ -11192,7 +11192,7 @@
 
 // <o> NRF_SDH_BLE_VS_UUID_COUNT - The number of vendor-specific UUIDs. 
 #ifndef NRF_SDH_BLE_VS_UUID_COUNT
-#define NRF_SDH_BLE_VS_UUID_COUNT 0
+#define NRF_SDH_BLE_VS_UUID_COUNT 1
 #endif
 
 // <q> NRF_SDH_BLE_SERVICE_CHANGED  - Include the Service Changed characteristic in the Attribute Table.
@@ -11537,7 +11537,7 @@
 // <e> NRF_SDH_ENABLED - nrf_sdh - SoftDevice handler
 //==========================================================
 #ifndef NRF_SDH_ENABLED
-#define NRF_SDH_ENABLED 0
+#define NRF_SDH_ENABLED 1
 #endif
 // <h> Dispatch model 
 
@@ -11554,7 +11554,7 @@
 // <2=> NRF_SDH_DISPATCH_MODEL_POLLING 
 
 #ifndef NRF_SDH_DISPATCH_MODEL
-#define NRF_SDH_DISPATCH_MODEL 0
+#define NRF_SDH_DISPATCH_MODEL 2
 #endif
 
 // </h> 

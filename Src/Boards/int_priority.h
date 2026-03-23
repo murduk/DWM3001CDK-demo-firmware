@@ -85,7 +85,10 @@ enum Priorities {
     PRIO_TcwmTask           = osPriorityNormal,
     PRIO_Usb2SpiTask        = osPriorityNormal,
 
-    PRIO_UciTask            = osPriorityNormal
+    PRIO_UciTask            = osPriorityNormal,
+
+    /* Cutebot BLE motor control task (SoftDevice FreeRTOS dispatch) */
+    PRIO_CutebotTask        = osPriorityAboveNormal
 
 
 };

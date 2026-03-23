@@ -59,6 +59,7 @@
 #include "HAL_error.h"
 #include "flushTask.h"
 #include "defaultTask.h"
+#include "cutebot_task.h"
 
 int main(void)
 {
@@ -73,6 +74,7 @@ int main(void)
     DefaultTaskInit();
     FlushTaskInit();
     ControlTaskInit();
+    CutebotTaskInit();
     /* Start scheduler */
     osKernelStart();
 
