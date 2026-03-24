@@ -41,7 +41,7 @@
 /* Maximum frame size: 4 header bytes + 7 payload bytes (angle turn) */
 #define CMD_BUF_MAX             11u
 
-static const nrfx_twim_t m_twim = NRFX_TWIM_INSTANCE(0);
+static const nrfx_twim_t m_twim = NRFX_TWIM_INSTANCE(1);
 static bool              m_initialized = false;
 
 /**

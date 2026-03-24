@@ -168,6 +168,9 @@
               <file file_name="/usr/local/nRF5_SDK_17.1.0_ddde560/components/libraries/util/app_error.c" />
               <file file_name="/usr/local/nRF5_SDK_17.1.0_ddde560/components/libraries/util/app_error_weak.c" />
             </folder>
+            <folder Name="experimental_section_vars">
+              <file file_name="/usr/local/nRF5_SDK_17.1.0_ddde560/components/libraries/experimental_section_vars/nrf_section_iter.c" />
+            </folder>
             <folder Name="atomic">
               <file file_name="/usr/local/nRF5_SDK_17.1.0_ddde560/components/libraries/atomic/nrf_atomic.c" />
             </folder>

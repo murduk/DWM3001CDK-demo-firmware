@@ -14,7 +14,9 @@ All new files are located in `Src/Apps/cutebot/`.
 
 ### `cutebot_pro.h` / `cutebot_pro.c` — I2C Motor Driver
 
-Implements the Cutebot Pro V2 I²C command protocol using **nrfx_twim0** (nRF5 SDK blocking mode).
+Implements the Cutebot Pro V2 I²C command protocol using **nrfx_twim1** (nRF5 SDK blocking mode).
+
+> **Note:** TWIM0 is unavailable — it shares the same hardware peripheral and IRQ as SPIM0, which is used by the DW3000 UWB sensor. TWIM1 is used instead.
 
 **I2C pin assignment** (free GPIOs on the DWM3001CDK expansion header, NOT in `custom_board.h`):
 
@@ -76,15 +78,18 @@ The device advertises as **"CutebotPro"**. Disconnecting any central automatical
 - Added `CutebotTaskInit()` call before `osKernelStart()`
 
 ### `Src/Config/sdk_config.h`
-| Setting | Old value | New value |
-|---------|-----------|-----------|
-| `NRFX_TWIM_ENABLED` | `0` | `1` |
-| `NRFX_TWIM0_ENABLED` | `0` | `1` |
-| `NRF_SDH_ENABLED` | `0` | `1` |
-| `NRF_SDH_DISPATCH_MODEL` | `0` (interrupt) | `2` (polling — required for FreeRTOS) |
-| `NRF_SDH_BLE_ENABLED` | `0` | `1` |
-| `NRF_SDH_BLE_PERIPHERAL_LINK_COUNT` | `0` | `1` |
-| `NRF_SDH_BLE_VS_UUID_COUNT` | `0` | `1` |
+| Setting | Old value | New value | Notes |
+|---------|-----------|-----------|-------|
+| `NRFX_TWIM_ENABLED` | `0` | `1` | |
+| `NRFX_TWIM0_ENABLED` | `0` | `1` | Set by legacy layer; TWIM0 hardware is unavailable (shared with SPIM0) |
+| `TWI1_ENABLED` | `0` | `1` | Required for legacy layer to enable NRFX_TWIM1 |
+| `TWI1_USE_EASY_DMA` | `0` | `1` | Required for legacy layer to route to TWIM1 (DMA) not TWI1 (non-DMA) |
+| `NRF_SDH_SOC_ENABLED` | `0` | `1` | Required when `SOFTDEVICE_PRESENT` is defined; needed by `nrf_drv_clock` |
+| `NRF_SDH_ENABLED` | `0` | `1` | |
+| `NRF_SDH_DISPATCH_MODEL` | `0` (interrupt) | `2` (polling — required for FreeRTOS) | |
+| `NRF_SDH_BLE_ENABLED` | `0` | `1` | |
+| `NRF_SDH_BLE_PERIPHERAL_LINK_COUNT` | `0` | `1` | |
+| `NRF_SDH_BLE_VS_UUID_COUNT` | `0` | `1` | |
 
 ### `Src/Boards/int_priority.h`
 - Added `PRIO_CutebotTask = osPriorityAboveNormal` to the priority enum.
@@ -116,6 +121,20 @@ The device advertises as **"CutebotPro"**. Disconnecting any central automatical
   - `nrfx_twim.c`
   - `nrf_sdh.c`, `nrf_sdh_ble.c`, `nrf_sdh_soc.c`, `nrf_sdh_freertos.c`
   - `ble_advdata.c`, `ble_srv_common.c`
+  - `nrf_section_iter.c` — required by `nrf_sdh.c` for section-variable iteration
+
+### `flash_placement.xml`
+
+Two changes were required for the linker:
+
+1. **Moved `.fconfig`** from the top of the FLASH section to after `.tdata`. The SEGGER linker processes sections in file order; having `.fconfig` (at `0x7E000`) before `.init` (at `0x1F000`) caused a backward-reference overlap error.
+
+2. **Added SDH observer sections** (between `.nrf_sections` and `.log_dynamic_data`) so the linker generates the `__start_sdh_*` / `__stop_sdh_*` symbols used by `nrf_sdh.c`:
+   - `.sdh_ble_observers`
+   - `.sdh_soc_observers`
+   - `.sdh_req_observers`
+   - `.sdh_state_observers`
+   - `.sdh_stack_observers`
 
 ---
 
